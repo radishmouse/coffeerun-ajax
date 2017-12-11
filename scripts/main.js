@@ -25,19 +25,21 @@ function drawAllOrders(ordersObject) {
   $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
 }
 
-function eraseOrders() {
+function eraseOrders(val) {
   console.log('erasing orders...');
   $(SELECTORS.LIST).empty();
+  return val;
 }
 
-function getAllCoffeeOrders(whatToDoFn) {
-  $.get(SERVER_URL, whatToDoFn);
+function getAllCoffeeOrders() {
+  return $.get(SERVER_URL);
 }
 
 function main() {
   setInterval(function () {
-    eraseOrders();
-    getAllCoffeeOrders(drawAllOrders);
+    getAllCoffeeOrders()
+      .then(eraseOrders)
+      .then(drawAllOrders)
   }, 2000)
 }
 
