@@ -13,16 +13,26 @@ function drawOrder(orderInfo) {
   return item;
 }
 
+function getSingleCoffeeOrder(email) {
+  return $.get(`${SERVER_URL}${email}`);
+}
+
 function drawAllOrders(ordersObject) {
   console.log('drawing orders!');
   console.log(ordersObject);
 
-  var ordersArray = Object.keys(ordersObject).map(function (k) {
-    var order = ordersObject[k];
-    order[k] = k;
-    return order
-  });
-  $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
+  // var ordersArray = Object.keys(ordersObject).map(function (k) {
+  //   var order = ordersObject[k];
+  //   order[k] = k;
+  //   return order
+  // });
+  // $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
+
+  var emails = Object.keys(ordersObject);
+  Promise.all(emails.map(getSingleCoffeeOrder))
+    .then(function (arrayOfPromises) {
+      $(SELECTORS.LIST).append(arrayOfPromises.map(drawOrder));
+    })
 }
 
 function eraseOrders() {
