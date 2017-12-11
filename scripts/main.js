@@ -20,7 +20,7 @@ function drawAllOrders(ordersObject) {
   var ordersArray = Object.keys(ordersObject).map(function (k) {
     var order = ordersObject[k];
     order[k] = k;
-    return order
+    return order;
   });
   $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
 }
