@@ -5,7 +5,7 @@ function drawOrder(orderInfo) {
     text: orderInfo.coffee
   });
   var email = $('<p>', {
-    text: orderInfo.email
+    text: orderInfo.emailAddress
   });
 
   item.append(email);
