@@ -5,7 +5,7 @@ function drawOrder(orderInfo) {
     text: orderInfo.coffee
   });
   var email = $('<p>', {
-    text: orderInfo.email
+    text: orderInfo.emailAddress
   });
 
   item.append(email);
@@ -22,6 +22,16 @@ function transformData(ordersObject) {
       return order;
     });
 
+}
+
+function storeData(data) {
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+
+  return data;
+}
+
+function loadData() {
+  return JSON.parse(localStorage.getItem(LS_KEY));
 }
 
 function drawAllOrders(ordersArray) {
@@ -42,6 +52,8 @@ function getAllCoffeeOrders() {
 function main() {
   setInterval(function () {
     getAllCoffeeOrders()
+      .then(storeData)
+      .catch(loadData)
       .then(eraseOrders)
       .then(transformData)
       .then(drawAllOrders)
