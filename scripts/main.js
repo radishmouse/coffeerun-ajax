@@ -13,15 +13,19 @@ function drawOrder(orderInfo) {
   return item;
 }
 
-function drawAllOrders(ordersObject) {
-  console.log('drawing orders!');
+function transformData(ordersObject) {
   console.log(ordersObject);
 
-  var ordersArray = Object.keys(ordersObject).map(function (k) {
-    var order = ordersObject[k];
-    order[k] = k;
-    return order;
-  });
+    return Object.keys(ordersObject).map(function (k) {
+      var order = ordersObject[k];
+      order[k] = k;
+      return order;
+    });
+
+}
+
+function drawAllOrders(ordersArray) {
+  console.log('drawing orders!');
   $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
 }
 
@@ -39,6 +43,7 @@ function main() {
   setInterval(function () {
     getAllCoffeeOrders()
       .then(eraseOrders)
+      .then(transformData)
       .then(drawAllOrders)
   }, 2000)
 }
