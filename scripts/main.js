@@ -21,17 +21,22 @@ function drawAllOrders(ordersObject) {
   console.log('drawing orders!');
   console.log(ordersObject);
 
-  // var ordersArray = Object.keys(ordersObject).map(function (k) {
-  //   var order = ordersObject[k];
-  //   order[k] = k;
-  //   return order
-  // });
-  // $(SELECTORS.LIST).append(ordersArray.map(drawOrder));
 
+  // Step 1. Grab just the email addresses.
   var emails = Object.keys(ordersObject);
-  Promise.all(emails.map(getSingleCoffeeOrder))
-    .then(function (arrayOfPromises) {
-      $(SELECTORS.LIST).append(arrayOfPromises.map(drawOrder));
+
+  // Step 2. Convert emails into Ajax promises.
+  var arrayOfPromises = emails.map(getSingleCoffeeOrder);
+
+  // Step 3. Wait for all the promises to resolve.
+  Promise.all(arrayOfPromises)
+    .then(function (arrayOfResults) {  // Step 4. Wait for the results to come back.
+
+      // Step 5. Transform results into DOM elements.
+      var arrayOfDOMElements = arrayOfResults.map(drawOrder);
+
+      // Step 6. Append DOM elements to the page.
+      $(SELECTORS.LIST).append(arrayOfDOMElements);
     })
 }
 
