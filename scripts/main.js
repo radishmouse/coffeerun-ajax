@@ -16,11 +16,7 @@ function drawOrder(orderInfo) {
 function transformData(ordersObject) {
   console.log(ordersObject);
 
-    return Object.keys(ordersObject).map(function (k) {
-      var order = ordersObject[k];
-      order[k] = k;
-      return order;
-    });
+  return Object.values(ordersObject);
 
 }
 
